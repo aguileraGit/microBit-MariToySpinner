@@ -8,8 +8,8 @@ input.onButtonPressed(Button.A, function () {
 })
 input.onButtonPressed(Button.B, function () {
     speed = speed + 1
-    if (speed > 10) {
-        speed = 0
+    if (speed > 20) {
+        speed = 5
     }
 })
 function rotateCC () {
@@ -26,7 +26,7 @@ pins.digitalWritePin(DigitalPin.P0, 0)
 pins.digitalWritePin(DigitalPin.P1, 0)
 pins.analogWritePin(AnalogPin.P2, 1023)
 dir = false
-speed = 0
+speed = 5
 basic.forever(function () {
-    pins.analogWritePin(AnalogPin.P2, 2 ** speed - 1)
+    pins.analogWritePin(AnalogPin.P2, 2 ** speed / 2 - 1)
 })
