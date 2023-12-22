@@ -1,10 +1,31 @@
+function plotAmpLEDs (currentAmp: number) {
+    j = 0
+    while (j < currentAmp) {
+        // currentAmp goes upto 10. There are only 5 LEDs. Divide by 2.
+        led.plot(0, Math.trunc(j / 2))
+        j += 1
+    }
+}
 input.onButtonPressed(Button.A, function () {
     // Button A increaes the scaling each time the button is pressed
     scaleValue = scaleValue + 1
     if (scaleValue > 10) {
         scaleValue = 2
+        for (let index = 0; index <= 4; index++) {
+            led.unplot(0, index)
+        }
     }
 })
+function plotDelayLEDs (currentDelay: number) {
+    for (let index = 0; index <= 4; index++) {
+        led.unplot(4, index)
+    }
+    k = 0
+    while (k < currentDelay) {
+        led.plot(4, Math.trunc(k / 2))
+        k += 1
+    }
+}
 function setScaling (pos: number, scaling: number) {
     if (sinarray[pos] > 0) {
         rotateCC()
@@ -34,6 +55,8 @@ function rotateCCW () {
 }
 let i = 0
 let motorSpeed = 0
+let k = 0
+let j = 0
 let sinarray: number[] = []
 let scaleValue = 0
 let timeStep = 0
@@ -79,6 +102,8 @@ sinarray = [
 basic.forever(function () {
     setScaling(i, scaleValue)
     basic.pause(2 ** timeStep)
+    plotAmpLEDs(scaleValue)
+    plotDelayLEDs(timeStep)
     i = i + 1
     if (i > sinarray.length) {
         i = 0
